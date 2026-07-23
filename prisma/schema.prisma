@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model TikTokVideo {
+  id          String   @id @default(cuid())
+  tiktokId    String   @unique
+  title       String?
+  createTime  DateTime
+  createdAt   DateTime @default(now())
+
+  snapshots   TikTokSnapshot[]
+}
+
+model TikTokSnapshot {
+  id          String   @id @default(cuid())
+  video       TikTokVideo @relation(fields: [videoId], references: [id])
+  videoId     String
+
+  views       Int
+  likes       Int
+  comments    Int
+  shares      Int
+
+  pulledAt    DateTime @default(now())
+
+  @@index([videoId, pulledAt])
+}
+
+model AppStoreDaily {
+  id          String   @id @default(cuid())
+  date        DateTime
+  downloads   Int
+
+  createdAt   DateTime @default(now())
+
+  @@unique([date])
+}
