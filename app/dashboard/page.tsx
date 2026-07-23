@@ -41,7 +41,11 @@ export default async function DashboardPage() {
         <h2 className="text-lg font-medium">TikTok videos by views</h2>
         {rows.length === 0 ? (
           <p className="text-sm text-gray-500">
-            No videos yet. Trigger ingestion:{" "}
+            No videos yet.{" "}
+            <a href="/api/auth/tiktok" className="text-blue-500 underline">
+              Connect your TikTok account
+            </a>
+            , then trigger ingestion:{" "}
             <code>curl -X POST http://localhost:3000/api/ingest/tiktok</code>
           </p>
         ) : (

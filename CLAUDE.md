@@ -34,10 +34,17 @@ app/
   lib/prisma.ts               Prisma v7 client singleton (+ @prisma/adapter-pg)
   lib/tiktok.ts               TikTok Display API helpers (OAuth refresh, user/info, video/list)
   lib/appstore.ts             App Store Connect JWT auth + (TODO) analytics download
+  api/auth/tiktok/route.ts    GET: start TikTok OAuth (redirect to authorize)
+  api/auth/tiktok/callback/route.ts  GET: exchange code, show refresh token to paste into env
   api/ingest/tiktok/route.ts  POST: poll TikTok, upsert TikTokVideo + append TikTokSnapshot
   api/ingest/appstore/route.ts POST: poll ASC, upsert AppStoreDaily
   dashboard/page.tsx          Minimal read-only dashboard
+  privacy/page.tsx, terms/page.tsx  Public legal pages (TikTok review)
 ```
+
+TikTok setup: visit `/api/auth/tiktok` once → authorize → paste the shown refresh
+token into `TIKTOK_REFRESH_TOKEN`. Requires `TIKTOK_REDIRECT_URI` to match the
+URI registered in the TikTok app.
 
 Trigger ingestion locally:
 `curl -X POST http://localhost:3000/api/ingest/tiktok` (and `/appstore`)
@@ -62,6 +69,7 @@ npm run dev                              # start Next dev server
 - **2026-07-23** — Added public `/privacy` and `/terms` pages (required for TikTok Display API app review; contact email is a TODO placeholder).
 - **2026-07-23** — Committed project to `main` (tooling dirs included; `.claude/settings.local.json` gitignored).
 - **2026-07-23** — Deploy prep: `next.config.ts` `output: "standalone"`, `postinstall: prisma generate` (client is gitignored), `migrate:deploy` script. Production build verified.
+- **2026-07-23** — Added TikTok OAuth flow: `GET /api/auth/tiktok` + `/callback` (CSRF state cookie, code→token exchange, displays refresh token). Added `TIKTOK_REDIRECT_URI` env + "Connect TikTok" link on dashboard.
 
 ## Guardrails (follow in EVERY session on this project)
 
