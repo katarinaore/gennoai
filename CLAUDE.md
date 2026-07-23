@@ -61,6 +61,7 @@ npm run dev                              # start Next dev server
 - **2026-07-23** — Added `.env.local` with TikTok + App Store Connect placeholders (gitignored).
 - **2026-07-23** — Added public `/privacy` and `/terms` pages (required for TikTok Display API app review; contact email is a TODO placeholder).
 - **2026-07-23** — Committed project to `main` (tooling dirs included; `.claude/settings.local.json` gitignored).
+- **2026-07-23** — Deploy prep: `next.config.ts` `output: "standalone"`, `postinstall: prisma generate` (client is gitignored), `migrate:deploy` script. Production build verified.
 
 ## Guardrails (follow in EVERY session on this project)
 
